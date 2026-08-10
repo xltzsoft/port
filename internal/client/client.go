@@ -398,9 +398,11 @@ func (c *Client) wrapTLS(conn net.Conn, cfg *config.Client) (net.Conn, error) {
 	return tc, nil
 }
 
-// verifyFingerprint 校验服务端证书 SHA256 指纹(兼容 "SHA256:xx" 或裸 hex)。
+// verifyFingerprint 校验服务端证书 SHA256 指纹。
+// 兼容 "SHA256:xx" 前缀、冒号分隔(openssl -fingerprint 输出)与裸 hex 三种写法。
 func verifyFingerprint(tc *tls.Conn, want string) error {
 	want = strings.TrimPrefix(strings.ToLower(strings.TrimSpace(want)), "sha256:")
+	want = strings.ReplaceAll(want, ":", "")
 	if len(want) != 64 {
 		return fmt.Errorf("指纹格式无效: %q", want)
 	}
