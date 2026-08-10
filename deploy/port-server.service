@@ -1,0 +1,15 @@
+[Unit]
+Description=port tunnel server (内网穿透服务端)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/port-server -c /etc/port/server.yaml
+Restart=always
+RestartSec=3
+LimitNOFILE=65535
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

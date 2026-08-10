@@ -1,0 +1,26 @@
+# port 服务端配置
+bind_addr: 0.0.0.0
+bind_port: 17200                 # 控制入站端口(所有客户端连这里)
+
+tls:
+  # 留空则服务端不启用 TLS(此时客户端 tls.enabled 必须为 false);
+  # 生产建议: sh deploy/gen_cert.sh 生成自签证书后填写路径。
+  cert: ""
+  key: ""
+
+auth:
+  token: "change-me-strong-token"   # 预共享 token,双端必须一致
+
+allow_ports: "20000-30000"       # 出站端口池白名单
+
+vhost_http_port: 17280           # vhost HTTP 共享端口,0 表示关闭
+vhost_domain: "example.com"      # subdomain 后缀: 如 nas → nas.example.com
+
+dashboard:                       # 管理面板(17250)
+  addr: "0.0.0.0:17250"
+  user: "admin"
+  password: "admin123"
+
+heartbeat:
+  interval: 15s
+  timeout: 90s

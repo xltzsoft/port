@@ -1,0 +1,31 @@
+# port 客户端配置
+server_addr: "127.0.0.1:17200"   # 服务端公网地址
+client_id: "home-nas"            # 客户端唯一标识(多客户端不可重复)
+token: "change-me-strong-token"  # 与服务端一致
+
+tls:
+  enabled: false                 # 服务端未配置证书时保持 false
+  skip_verify: false
+  # 证书指纹 pinning(启用后自动忽略证书链校验,只认指纹):
+  # 在服务端执行 openssl x509 -in server.crt -noout -fingerprint -sha256 获取
+  server_fingerprint: ""         # 例: "SHA256:AB:CD:..."
+
+heartbeat: { interval: 15s, timeout: 90s }
+reconnect: { base: 1s, max: 60s }
+
+proxies:
+  - name: ssh
+    type: tcp
+    local: 127.0.0.1:22
+    remote_port: 20022           # 对外: SERVER_IP:20022
+
+  - name: web
+    type: tcp
+    local: 127.0.0.1:8080
+    remote_port: 20080           # 对外: SERVER_IP:20080
+
+  - name: web-vhost
+    type: http
+    local: 127.0.0.1:8080
+    subdomain: nas               # 对外: http://nas.example.com:17280
+    # custom_domains: ["myapp.example.com"]   # 或自定义域名直连
