@@ -141,7 +141,7 @@ const dashIndexHTML = `<!DOCTYPE html>
 <table>
 <thead><tr>
   <th>client_id</th><th>来源地址</th><th>登录时间</th><th>在线时长</th>
-  <th>下行(B)</th><th>上行(B)</th><th>活动连接</th><th>代理</th>
+  <th>上行(B)</th><th>下行(B)</th><th>活动连接</th><th>代理</th>
 </tr></thead>
 <tbody id="rows"><tr><td colspan="8" class="muted">加载中…</td></tr></tbody>
 </table>
